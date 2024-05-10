@@ -1,6 +1,7 @@
 import express from "express"
 import dotenv from 'dotenv'
 import mongoose from "mongoose";
+import livreRoute from "./routes/livre.js"
 
 const app = express();
 dotenv.config();
@@ -13,6 +14,7 @@ mongoose.connect(`${mongoDB}/livresDB`).then(()=>{console.log('connected to mong
    console('error connection to mongodb', error)
 })
 
+app.use('/livre' , livreRoute)
 
 app.listen(port , ()=>{
   try{
