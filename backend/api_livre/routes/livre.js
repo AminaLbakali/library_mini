@@ -1,7 +1,36 @@
 import express from "express";
 import livre from "../models/livre.js";
+import amqp from "amqplib"
 
 const router = express.Router();
+const RabbitMQURL = process.env.RabbitMQURL;
+var connection, channel;
+const client_queue = "api_client";
+const livre_queue = "api_livre";
+const emprunt_queue = "api_emprunt";
+const notification_queue = "api_notification";
+
+const connectRabbitMQ = async () => {
+  connection = await amqp.connect(RabbitMQURL);
+  channel = await connection.createChannel();
+  channel.assertQueue(client_queue);
+  channel.assertQueue(livre_queue);
+  channel.assertQueue(emprunt_queue);
+  channel.assertQueue(notification_queue);
+};
+
+connectRabbitMQ().then(() => {
+  console.log("connect to rabbitMQ");
+  channel.consume(livre_queue, (data) => {
+    const empruntData = JSON.parse(data.content.toString());
+    livre.find({code: empruntData.code},{_id: 0 ,titre:1,description:1,auteur:1}).then((data)=>{
+      console.log(data)
+      channel.sendToQueue(emprunt_queue , Buffer.from(JSON.stringify(data)))
+    })
+    channel.ack(data)
+  });
+});
+
 
 router.get("/", async (req, res) => {
   livre
