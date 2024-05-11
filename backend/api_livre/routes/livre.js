@@ -24,7 +24,6 @@ connectRabbitMQ().then(() => {
   channel.consume(livre_queue, (data) => {
     const empruntData = JSON.parse(data.content.toString());
     livre.find({code: empruntData.code},{_id: 0 ,titre:1,description:1,auteur:1}).then((data)=>{
-      console.log(data)
       channel.sendToQueue(emprunt_queue , Buffer.from(JSON.stringify(data)))
     })
     channel.ack(data)

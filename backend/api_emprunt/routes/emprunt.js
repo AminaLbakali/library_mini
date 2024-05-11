@@ -48,7 +48,6 @@ router.post("/", (req, res) => {
          livre:livre[0],
          client:client[0],
        }
-       console.log(newEmprunt)
        emprunt.create(newEmprunt)
      .then(() => res.json({ message: "livre bien reservee" })).catch((e)=>{
        return res.status(500).json({message: e.message})
