@@ -1,6 +1,7 @@
 import express from "express"
 import dotenv from 'dotenv'
 import mongoose from "mongoose";
+import clientRoute from "./routes/client.js"
 
 const app = express();
 dotenv.config();
@@ -13,6 +14,7 @@ mongoose.connect(`${mongoDB}/clientsDB`).then(()=>{console.log('connected to mon
    console('error connection to mongodb', error)
 })
 
+app.use('/client' , clientRoute)
 
 app.listen(port , ()=>{
   try{
