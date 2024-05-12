@@ -2,6 +2,7 @@ import express from "express";
 import emprunt from "../models/emprunt.js";
 import amqp from "amqplib";
 import dotenv from "dotenv";
+import e from "express";
 
 const router = express.Router();
 dotenv.config();
@@ -21,40 +22,51 @@ const connectRabbitMQ = async () => {
   channel.assertQueue(notification_queue);
 };
 
+let newEmprunt = false;
 connectRabbitMQ().then(() => {
   console.log("connected to rabbitMQ");
+
+  let livre = null;
+  let client = null;
+  channel.consume(emprunt_queue, (data) => {
+    const empruntData = JSON.parse(data.content.toString());
+    if (empruntData.livre) {
+      livre = empruntData.livre;
+    } else if (empruntData.client) {
+      client = empruntData.client;
+    }
+
+    if (client && livre) {
+      newEmprunt = true
+      console.log({
+        livre: livre,
+        client: client,
+      });
+      emprunt.create({
+        livre: livre,
+        client: client,
+      });
+      livre=null
+      client=null
+      newEmprunt=false
+    }
+
+    channel.ack(data);
+  });
 });
 
 router.post("/", (req, res) => {
-  const empruntData = req.body;
-  let client = null
-  let livre = null;
-  let countMessage= 0 
+  try {
+     const empruntData = req.body;
   channel.sendToQueue(livre_queue, Buffer.from(JSON.stringify(empruntData)));
-
   channel.sendToQueue(client_queue, Buffer.from(JSON.stringify(empruntData)));
+  res.json({message : "livre bien reservee"})
+  } catch (error) {
+    res.status(500).jsonjson({message : "erreur dans la reservation !"})
+  }
+ 
 
-  channel.consume(emprunt_queue, (data) => {
-    countMessage++
-
-    if(countMessage===1){
-      livre = JSON.parse(data.content.toString());
-    }else{
-      client = JSON.parse(data.content.toString());
-    }
-
-   if(countMessage===2 && client && livre){
-       const newEmprunt = {
-         livre:livre[0],
-         client:client[0],
-       }
-       emprunt.create(newEmprunt)
-     .then(() => res.json({ message: "livre bien reservee" })).catch((e)=>{
-       return res.status(500).json({message: e.message})
-     });
-     }
-  });
-  
+ 
 });
 router.get("/", (req, res) => {
   emprunt.find({}).then((data) => res.json(data));

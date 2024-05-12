@@ -2,6 +2,7 @@ import express from "express";
 import livre from "../models/livre.js";
 import amqp from "amqplib"
 
+
 const router = express.Router();
 const RabbitMQURL = process.env.RabbitMQURL;
 var connection, channel;
@@ -24,7 +25,11 @@ connectRabbitMQ().then(() => {
   channel.consume(livre_queue, (data) => {
     const empruntData = JSON.parse(data.content.toString());
     livre.find({code: empruntData.code},{_id: 0 ,titre:1,description:1,auteur:1}).then((data)=>{
-      channel.sendToQueue(emprunt_queue , Buffer.from(JSON.stringify(data)))
+      const livreInfo  = {
+        livre : data[0]
+      }
+      console.log(livreInfo)
+      channel.sendToQueue(emprunt_queue , Buffer.from(JSON.stringify(livreInfo)))
     })
     channel.ack(data)
   });

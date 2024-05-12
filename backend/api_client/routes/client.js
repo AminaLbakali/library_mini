@@ -19,12 +19,17 @@ const connectRabbitMQ = async () => {
   channel.assertQueue(notification_queue);
 };
 
+
 connectRabbitMQ().then(() => {
   console.log("connect to rabbitMQ");
   channel.consume(client_queue, (data) => {
     const empruntData = JSON.parse(data.content.toString());
     client.find({id: empruntData.id},{_id:0,nom:1,prenom:1,email:1}).then((data)=>{
-      channel.sendToQueue(emprunt_queue , Buffer.from(JSON.stringify(data)))
+      const clientInfo  = {
+        client : data[0]
+      }
+      console.log(clientInfo)
+      channel.sendToQueue(emprunt_queue , Buffer.from(JSON.stringify(clientInfo)))
     })
     channel.ack(data)
   });
