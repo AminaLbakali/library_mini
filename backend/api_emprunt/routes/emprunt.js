@@ -37,7 +37,7 @@ connectRabbitMQ().then(() => {
     }
 
     if (client && livre) {
-      newEmprunt = true
+      newEmprunt = true;
       console.log({
         livre: livre,
         client: client,
@@ -46,9 +46,9 @@ connectRabbitMQ().then(() => {
         livre: livre,
         client: client,
       });
-      livre=null
-      client=null
-      newEmprunt=false
+      livre = null;
+      client = null;
+      newEmprunt = false;
     }
 
     channel.ack(data);
@@ -57,18 +57,29 @@ connectRabbitMQ().then(() => {
 
 router.post("/", (req, res) => {
   try {
-     const empruntData = req.body;
-  channel.sendToQueue(livre_queue, Buffer.from(JSON.stringify(empruntData)));
-  channel.sendToQueue(client_queue, Buffer.from(JSON.stringify(empruntData)));
-  res.json({message : "livre bien reservee"})
+    const empruntData = req.body;
+    channel.sendToQueue(livre_queue, Buffer.from(JSON.stringify(empruntData)));
+    channel.sendToQueue(client_queue, Buffer.from(JSON.stringify(empruntData)));
+    res.json({ message: "livre bien reservee" });
   } catch (error) {
-    res.status(500).jsonjson({message : "erreur dans la reservation !"})
+    res.status(500).jsonjson({ message: "erreur dans la reservation !" });
   }
- 
-
- 
 });
-router.get("/", (req, res) => {
+router.get("/Allemprunt", (req, res) => {
   emprunt.find({}).then((data) => res.json(data));
+});
+
+router.get("/Allemprunt/:id", (req, res) => {
+  const clientId = Number(req.params.id) ;
+  emprunt
+    .find({'client.id' : clientId},{_id:0,livre:1,client:1,date_emprunt:1,date_retour:1})
+    .then((data) => {
+      if (data.length === 0) {
+        res.status(404).json({ message: "Client not found" });
+      } else {
+        res.json(data);
+      }
+    })
+    .catch((e) => res.status(404).json({ message: "non trouvee" }));
 });
 export default router;
