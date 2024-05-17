@@ -80,6 +80,9 @@ router.get("/Allemprunt/:id", (req, res) => {
         res.json(data);
       }
     })
+
+
+    
     .catch((e) => res.status(404).json({ message: "non trouvee" }));
 });
 export default router;
