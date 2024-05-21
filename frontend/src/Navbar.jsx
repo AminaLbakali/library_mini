@@ -44,7 +44,7 @@ const Navbar = () => {
               </svg>
               <span className="sr-only">Toggle sidebar</span>
             </button>
-            <a href="" className="flex mr-4">
+            <a href="#" className="flex mr-4">
               <img src="https://flowbite.s3.amazonaws.com/logo.svg" className="mr-3 h-8" alt="FlowBite Logo" />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
             </a>
@@ -127,7 +127,7 @@ const Navbar = () => {
               data-dropdown-toggle="dropdown"
             >
               <span className="sr-only">Open user menu</span>
-              <img className="w-8 h-8 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png" alt="user photo" />
+              <img className="w-8 h-8 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png" alt="user" />
             </button>
             <div
               className="hidden z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
