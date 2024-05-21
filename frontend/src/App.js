@@ -1,10 +1,12 @@
 import './App.css';
-import Clients from './components/Clients/Clients';
+import Books from './components/Books/Books';
+import Navbar from './components/partials/Navbar';
 
 function App() {
   return (
     <div className="App">
-      <Clients />
+      <Navbar />
+      <Books />
     </div>
   );
 }
