@@ -1,11 +1,13 @@
 import express from "express"
 import dotenv from 'dotenv'
+import cors from 'cors'
 import mongoose from "mongoose";
 import clientRoute from "./routes/client.js"
 
 const app = express();
 dotenv.config();
 app.use(express.json())
+app.use(cors())
 
 const port = process.env.PORT;
 const mongoDB = process.env.MONGODB

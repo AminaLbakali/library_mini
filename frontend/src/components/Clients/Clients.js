@@ -14,11 +14,11 @@ export default function Clients() {
         console.error(error);
       }
     };
-
     fetchClients();
   },[])
   return (
     <div>
+      <p>clients list : </p>
       {clients && clients.map((c)=>
         <p>{c?.nom}</p>
       )}
