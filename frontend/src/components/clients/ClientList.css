@@ -96,17 +96,14 @@
   }
   .text-center {
     text-align: center;
-    color: #333;
-    font-size: 2.5rem;
+    color: #e2dede;
+    font-size: 1.5rem;
     margin-bottom: 1.5rem;
     font-weight: bold;
     position: relative;
     display: inline-block;
     padding: 0.5rem 1rem;
-    background: linear-gradient(to right, #4CAF50, #2196F3);
-    -webkit-background-clip: text;
-    color: transparent;
-    transition: color 0.3s ease-in-out;
+
   }
   .text-center:hover {
     color: #4CAF50;

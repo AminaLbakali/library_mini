@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { getClients, deleteClient } from '../services/ClientService';
 import './ClientList.css';
 import Navbar from '../layout/Navbar';
+import { FaUser, FaEdit } from 'react-icons/fa';
+
 
 const ClientList = () => {
   const [clients, setClients] = useState([]);
@@ -22,8 +24,12 @@ const ClientList = () => {
     <div className="client-list-container">
       <h1 className="text-center">Client List</h1>
       <Link to="/clients/add" className="add-client-button">
+      <span style={{ display: 'flex', alignItems: 'center' }}>
+        <FaUser style={{ marginRight: '15px' }} /> 
         Add Client
-      </Link>
+      </span>
+    </Link>
+      
       <ul className="client-list">
         {clients.map((client) => (
           <li key={client._id} className="client-item">
