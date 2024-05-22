@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { addNewEmprunt } from '../services/EmpruntService';
 
+
 const AddEmprunt = () => {
     const [client, setClient] = useState('');
     const [livre, setLivre] = useState('');
@@ -8,7 +9,7 @@ const AddEmprunt = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const empruntData = { client, livre };
+            const empruntData = { id, livre };
             await addNewEmprunt(empruntData);
             alert('Emprunt added successfully');
         } catch (error) {
@@ -16,7 +17,6 @@ const AddEmprunt = () => {
             alert('Failed to add emprunt');
         }
     };
-
     return (
         <form onSubmit={handleSubmit}>
             <div>
