@@ -11,6 +11,7 @@ const livre_queue = "api_livre";
 const emprunt_queue = "api_emprunt";
 const notification_queue = "api_notification";
 
+
 const connectRabbitMQ = async () => {
   connection = await amqp.connect(RabbitMQURL);
   channel = await connection.createChannel();

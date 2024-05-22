@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { addClient, getClient, updateClient } from '../services/ClientService';
 import Navbar from '../layout/Navbar';
 import { addBook, getBook, updateBook } from '../services/BookService';
 
@@ -16,6 +15,13 @@ const BookAdd = () => {
                 .catch(error => console.error('Error fetching client:', error));
         }
     }, [id]);
+      const [image, setImage] = useState(null);
+    
+      const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+      };
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -43,37 +49,39 @@ const BookAdd = () => {
             console.error('Error submitting form:', error);
         }
     };
+    
 
     return (
         <> <Navbar />
         <div className="form-container">
             <h1 className="form-title">{id ? 'Edit' : 'Add'} Client</h1>
             <form onSubmit={id ? handleUpdateSubmit : handleAddSubmit} className="client-form">
-                <input type='file' value={book.image}  />
+            <input type="file" onChange={handleImageChange} />
+            {image && <img src={URL.createObjectURL(image)} alt="Uploaded" />}
                 <input
                     type="text"
-                    name="nom"
+                    name="titre"
                     value={book.titre}
                     onChange={handleChange}
-                    placeholder="Nom"
+                    placeholder="titre"
                     required
                     className="form-input"
                 />
                 <input
                     type="text"
-                    name="prenom"
+                    name="description"
                     value={book.description}
                     onChange={handleChange}
-                    placeholder="Prenom"
+                    placeholder="description"
                     required
                     className="form-input"
                 />
                 <input
-                    type="email"
-                    name="email"
+                    type="text"
+                    name="auteur"
                     value={book.auteur}
                     onChange={handleChange}
-                    placeholder="Email"
+                    placeholder="auteur"
                     required
                     className="form-input"
                 />

@@ -2,10 +2,11 @@ import express from "express";
 import emprunt from "../models/emprunt.js";
 import amqp from "amqplib";
 import dotenv from "dotenv";
-import e from "express";
+
 
 const router = express.Router();
 dotenv.config();
+
 const RabbitMQURL = process.env.RabbitMQURL;
 var connection, channel;
 const client_queue = "api_client";
