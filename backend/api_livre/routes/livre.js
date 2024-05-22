@@ -24,7 +24,7 @@ connectRabbitMQ().then(() => {
   console.log("connect to rabbitMQ");
   channel.consume(livre_queue, (data) => {
     const empruntData = JSON.parse(data.content.toString());
-    livre.find({code: empruntData.code},{_id: 0 ,titre:1,description:1,auteur:1}).then((data)=>{
+    livre.find({_id: empruntData.code},{_id: 0 ,titre:1,description:1,auteur:1}).then((data)=>{
       const livreInfo  = {
         livre : data[0]
       }
