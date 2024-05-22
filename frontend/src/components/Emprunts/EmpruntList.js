@@ -23,7 +23,8 @@ const EmpruntList = () => {
             <ul>
                 {emprunts.map((emprunt) => (
                     <li key={emprunt.id}>
-                        {emprunt.client.name} borrowed {emprunt.livre.title} on {new Date(emprunt.date_emprunt).toLocaleDateString()}
+                        {emprunt.client.nom} borrowed {emprunt.livre.titre} on {new Date(emprunt.date_emprunt).toLocaleDateString()}
+
                     </li>
                 ))}
             </ul>
