@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
     .then((data) => {
       return res.json(data);
     })
-    .catch((error) => res.status(401).json({ message: error.message }));
+    .catch((error) => res.status(401).json({ message: 'hello' }));
 });
 
 router.post("/", async (req, res) => {
@@ -58,8 +58,9 @@ router.get("/:id", (req, res) => {
   const id = req.params.id;
 
   client
-    .find({ id: id }, { _id: 0, nom: 1, prenom: 1, email: 1 })
-    .then((data) => res.json(data));
+    .find({ _id: id }, { _id: 0, nom: 1, prenom: 1, email: 1 })
+    .then((data) => res.json(data))
+    .catch((error) => res.status(500).json({ message: 'hey' }));
 });
 
 router.put("/:id", (req, res) => {
@@ -67,7 +68,7 @@ router.put("/:id", (req, res) => {
   const { nom, prenom, email } = req.body;
 
   client
-    .updateOne({ id: id }, { nom: nom, prenom: prenom, email: email })
+    .updateOne({ _id: id }, { nom: nom, prenom: prenom, email: email })
     .then(() => res.json({ message: "client bien modifier" }))
     .catch((error) =>
       res.status(500).json({ message: "erreur du modification" })
@@ -77,7 +78,7 @@ router.put("/:id", (req, res) => {
 router.delete("/", (req, res) => {
   const id = req.body.id;
   client
-    .deleteOne({ id: id })
+    .deleteOne({ _id: id })
     .then(() => res.json({ message: "client supprimer" }))
     .catch((error) => res.status(500).json({ message: "client pas trouver" }));
 });
