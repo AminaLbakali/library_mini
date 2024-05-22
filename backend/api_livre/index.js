@@ -12,7 +12,7 @@ app.use(cors());
 const port = process.env.PORT;
 const mongoDB = process.env.MONGODB
 
-mongoose.connect(`${mongoDB}/livresDB`).then(()=>{console.log('connected to mongodb')}).catch(()=>{
+mongoose.connect(`${mongoDB}/livresDB`).then(()=>{console.log('connected to mongodb')}).catch((error)=>{
    console('error connection to mongodb', error)
 })
 

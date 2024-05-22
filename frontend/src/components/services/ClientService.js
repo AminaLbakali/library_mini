@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-
-const apiUrl = ' http://localhost:3001/client';
+const apiUrl = 'http://localhost:3001/client';
 
 export const getClients = async () => {
     try {
