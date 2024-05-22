@@ -57,9 +57,8 @@ router.post("/", async (req, res) => {
 
 router.get("/:id", (req, res) => {
   const id = req.params.id;
-  console.log(id);
   livre
-    .find({ code: id }, { _id: 0, titre: 1, description: 1, auteur: 1 })
+    .find({_id: id }, { _id: 0, titre: 1, description: 1, auteur: 1 })
     .then((data) => res.json(data));
 });
 
@@ -69,7 +68,7 @@ router.put("/:id", (req, res) => {
 
   livre
     .updateOne(
-      { code: id },
+      { _id: id },
       { titre: titre, description: description, auteur: auteur }
     )
     .then(() => res.json({message: "livre bien modifier"}))
@@ -78,7 +77,7 @@ router.put("/:id", (req, res) => {
 
 router.delete("/:id" , (req,res)=>{
   const id = req.params.id
-  livre.deleteOne({code:id}).then(()=>res.json({message: "livre supprimer"}))
+  livre.deleteOne({_id:id}).then(()=>res.json({message: "livre supprimer"}))
   .catch((error)=>res.status(500).json({message:"livre pas trouver"}))
 })
 
