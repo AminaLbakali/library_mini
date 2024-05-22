@@ -20,7 +20,7 @@ const BookList = () => {
      <Navbar />
     <div className="client-list-container">
       <h1 className="text-center">books List</h1>
-      <Link to="/clients/add" className="add-client-button">
+      <Link to="/books/add" className="add-client-button">
         Add Book
       </Link>
       <ul className="client-list">
