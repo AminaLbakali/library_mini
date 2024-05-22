@@ -11,7 +11,7 @@ const ClientList = () => {
 
     const handleDelete = async (id) => {
         await deleteClient(id);
-        setClients(clients.filter(client => client.id !== id));
+        setClients(clients.filter(client => client._id !== id));
     };
 
     return (
