@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:3000/client';
+
+const apiUrl = ' http://localhost:3001/client';
 
 export const getClients = async () => {
     try {
@@ -22,6 +23,7 @@ export const getClient = async (id) => {
 
 export const addClient = async (client) => {
     try {
+        console.log(apiUrl)
         return await axios.post(apiUrl, client);
     } catch (error) {
         console.error('Error adding client:', error);

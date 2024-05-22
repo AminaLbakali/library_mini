@@ -73,10 +73,10 @@ router.put("/:id", (req, res) => {
     .catch((error) =>
       res.status(500).json({ message: "erreur du modification" })
     );
-});
+})
 
-router.delete("/", (req, res) => {
-  const id = req.body.id;
+router.delete("/:id", (req, res) => {
+  const {id} = req.params;
   client
     .deleteOne({ _id: id })
     .then(() => res.json({ message: "client supprimer" }))
