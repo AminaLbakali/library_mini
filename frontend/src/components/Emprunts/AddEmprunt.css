@@ -1,0 +1,72 @@
+.container {
+  padding: 6px;
+  background-image: linear-gradient(to bottom, #F7DC6F, #FFC080, #F7DC6F);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 3xl;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: #754975;
+}
+
+.form {
+  width: 100%;
+  max-width: 768px;
+  background-color: #FFFFFF;
+  padding: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border-left: 4px solid #F7DC6F;
+}
+
+.label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.label span {
+  color: #754975;
+  font-weight: 600;
+}
+
+.select {
+  margin-top: 1px;
+  width: 100%;
+  padding: 2px;
+  background-color: #F7DC6F;
+  border: 1px solid #F7DC6F;
+  border-radius: 10px;
+  transition: duration 300ms;
+}
+
+.select:focus {
+  border-color: #F7DC6F;
+  background-color: #FFFFFF;
+  outline: none;
+}
+
+.button {
+  margin-top: 4px;
+  background-color: #F7DC6F;
+  color: #FFFFFF;
+  font-weight: 600;
+  padding: 2px 4px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: duration 300ms;
+}
+
+.button:hover {
+  background-color: #FFC080;
+}
+
+.button:focus {
+  outline: none;
+  ring-color: #F7DC6F;
+  ring-width: 2px;
+}

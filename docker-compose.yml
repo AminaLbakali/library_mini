@@ -1,7 +1,7 @@
 version: 'latest'
 services:
   rabbit:
-    image: rabbit:3-management
+    image: rabbitmq:3-management
     ports:
       - 5672:5672
       - 15672:15672
@@ -16,30 +16,44 @@ services:
     ports:
       - 30001:27017
     volumes:
-      - dblivres:/data/db
+      - dblivre:/data/db
+  dbemprunt:
+    image: mongo
+    ports:
+      - 30002:27017
+    volumes:
+      - dbemprunt:/data/db
+  dbnotification:
+    image: mongo
+    ports:
+      - 30003:27017
+    volumes:
+      - dbnotification:/data/db
   clients:
     build: ./backend
     ports:
       - 3000:3000
     environment:
       - port=3000
-      - url_mongoose=mongodb://dbetud:27017/dbetudiants
+      - url_mongoose=mongodb://dbclient:27017/dbclients
       - url_rabbit=amqp://guest:guest@rabbit:5672
       - secret=4e129721135ce7cbde0cd68bc4f7167e306367660f2ad3e14718c59ff9377308846905d0b136428da1e9dff9377308846905d0b136428daff9377308846905d0b136428da1e9d6085b56f73c
     depends_on:
       - rabbit
-      - dbetud
+      - dbclient
   note:
     build: ./frontend
     ports:
       - 3001:3000
     environment:
       - port=3000
-      - url_mongoose=mongodb://dbnote:27017/dbnotes
+      - url_mongoose=mongodb://dbclient:27017/dbclients
       - url_rabbit=amqp://guest:guest@rabbit:5672
     depends_on:
       - rabbit
-      - dbnote
+      - dbclient
 volumes:
-  - dbetudiants:
-  - dbnotes:
+  dbclient:
+  dblivre:
+  dbemprunt:
+  dbnotification:
