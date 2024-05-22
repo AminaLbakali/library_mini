@@ -75,8 +75,8 @@ router.put("/:id", (req, res) => {
     );
 });
 
-router.delete("/", (req, res) => {
-  const id = req.body.id;
+router.delete("/:id", (req, res) => {
+  const {id} = req.params;
   client
     .deleteOne({ _id: id })
     .then(() => res.json({ message: "client supprimer" }))
