@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { addClient, getClient, updateClient } from '../services/ClientService';
+import Navbar from '../layout/Navbar';
+import './ClientForm.css'; 
 
 const ClientForm = () => {
     const { id } = useParams();
@@ -9,7 +11,9 @@ const ClientForm = () => {
 
     useEffect(() => {
         if (id) {
-            getClient(id).then((res) => setClient(res.data[0])).catch(error => console.error('Error fetching client:', error));
+            getClient(id)
+                .then((res) => setClient(res.data[0]))
+                .catch(error => console.error('Error fetching client:', error));
         }
     }, [id]);
 
@@ -21,12 +25,13 @@ const ClientForm = () => {
     const handleAddSubmit = async (e) => {
         e.preventDefault();
         try {
-                await addClient(client);
+            await addClient(client);
             navigate('/');
         } catch (error) {
             console.error('Error submitting form:', error);
         }
     };
+
     const handleUpdateSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -40,16 +45,45 @@ const ClientForm = () => {
     };
 
     return (
-        <div>
-        
-        <form onSubmit={handleAddSubmit}>
-            <input type="text" name="nom" onChange={handleChange} placeholder="Nom" required />
-            <input type="text" name="prenom"  onChange={handleChange} placeholder="Prenom" required />
-            <input type="email" name="email"  onChange={handleChange} placeholder="Email" required />
-            <button type="submit">{'Add'} Client</button>
-        </form>
+        <> <Navbar />
+        <div className="form-container">
+            <h1 className="form-title">{id ? 'Edit' : 'Add'} Client</h1>
+            <form onSubmit={id ? handleUpdateSubmit : handleAddSubmit} className="client-form">
+                <input
+                    type="text"
+                    name="nom"
+                    value={client.nom}
+                    onChange={handleChange}
+                    placeholder="Nom"
+                    required
+                    className="form-input"
+                />
+                <input
+                    type="text"
+                    name="prenom"
+                    value={client.prenom}
+                    onChange={handleChange}
+                    placeholder="Prenom"
+                    required
+                    className="form-input"
+                />
+                <input
+                    type="email"
+                    name="email"
+                    value={client.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                    required
+                    className="form-input"
+                />
+                <button type="submit" className="form-button">
+                    {id ? 'Update' : 'Add'} Client
+                </button>
+            </form>
         </div>
+        </>
     );
 };
 
 export default ClientForm;
+

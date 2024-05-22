@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getClients, deleteClient } from '../services/ClientService';
-import './ClientList.css'; // Import the CSS file
+import './ClientList.css';
+import Navbar from '../layout/Navbar';
 
 const ClientList = () => {
   const [clients, setClients] = useState([]);
@@ -16,6 +17,8 @@ const ClientList = () => {
   };
 
   return (
+    <>
+     <Navbar />
     <div className="client-list-container">
       <h1 className="text-center">Client List</h1>
       <Link to="/clients/add" className="add-client-button">
@@ -37,6 +40,7 @@ const ClientList = () => {
         ))}
       </ul>
     </div>
+    </>
   );
 };
 
