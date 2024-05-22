@@ -48,13 +48,6 @@ const ClientForm = () => {
             <input type="email" name="email"  onChange={handleChange} placeholder="Email" required />
             <button type="submit">{'Add'} Client</button>
         </form>
-        
-        <form onSubmit={handleUpdateSubmit}>
-            <input type="text" name="nom" value={client.nom} onChange={handleChange} placeholder="Nom" required />
-            <input type="text" name="prenom" value={client.prenom} onChange={handleChange} placeholder="Prenom" required />
-            <input type="email" name="email" value={client.email} onChange={handleChange} placeholder="Email" required />
-            <button type="submit">{ 'Update'} Client</button>
-        </form>
         </div>
     );
 };

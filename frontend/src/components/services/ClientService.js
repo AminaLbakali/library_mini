@@ -22,6 +22,7 @@ export const getClient = async (id) => {
 
 export const addClient = async (client) => {
     try {
+        console.log(apiUrl)
         return await axios.post(apiUrl, client);
     } catch (error) {
         console.error('Error adding client:', error);
