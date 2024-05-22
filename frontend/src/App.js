@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ClientList from './components/clients/ClientList';
@@ -14,5 +15,19 @@ const App = () => {
         </Router>
     );
 };
+=======
+import './App.css';
+import Books from './components/Books/Books';
+import Navbar from './components/partials/Navbar';
+
+function App() {
+  return (
+    <div className="App">
+      <Navbar />
+      <Books />
+    </div>
+  );
+}
+>>>>>>> 23e3c098c8f13c117f444a41f6b89b1137ea83b0
 
 export default App;
