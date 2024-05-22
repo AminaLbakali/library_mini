@@ -1,34 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getClients, deleteClient } from '../services/ClientService';
+import './ClientList.css'; // Import the CSS file
 
 const ClientList = () => {
-    const [clients, setClients] = useState([]);
+  const [clients, setClients] = useState([]);
 
-    useEffect(() => {
-        getClients().then((res) => setClients(res.data));
-    }, []);
+  useEffect(() => {
+    getClients().then((res) => setClients(res.data));
+  }, []);
 
-    const handleDelete = async (id) => {
-        await deleteClient(id);
-        setClients(clients.filter(client => client._id !== id));
-    };
+  const handleDelete = async (id) => {
+    await deleteClient(id);
+    setClients(clients.filter((client) => client._id !== id));
+  };
 
-    return (
-        <div>
-            <h1>Client List</h1>
-            <Link to="/clients/add">Add Client</Link>
-            <ul>
-                {clients.map((client) => (
-                    <li key={client._id}>
-                        {client.nom} {client.prenom} ({client.email})
-                        <Link to={`/clients/edit/${client._id}`}>Edit</Link>
-                        <button onClick={() => handleDelete(client._id)}>Delete</button>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+  return (
+    <div className="client-list-container">
+      <h1 className="text-center">Client List</h1>
+      <Link to="/clients/add" className="add-client-button">
+        Add Client
+      </Link>
+      <ul className="client-list">
+        {clients.map((client) => (
+          <li key={client._id} className="client-item">
+            <span className="client-info">{client.nom} {client.prenom} ({client.email})</span>
+            <div className="button-group">
+              <Link to={`/clients/edit/${client._id}`} className="edit-button">
+                Edit
+              </Link>
+              <button onClick={() => handleDelete(client._id)} className="delete-button">
+                Delete
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default ClientList;
